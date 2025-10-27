@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Telegram уведомлений</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: #f093fb;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #f5576c;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+        .info { color: #60a5fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тест Telegram уведомлений</h1>
+        
+        <p>Эта страница поможет проверить, работают ли уведомления.</p>
+        
+        <div>
+            <button onclick="testTelegram()">📤 Отправить тестовое уведомление</button>
+            <button onclick="clearLog()">🗑️ Очистить лог</button>
+        </div>
+        
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const TELEGRAM_BOT_TOKEN = '8330558748:AAG4Gk2ANhrzf89VmrNbF3fai6eSwmw4pZk';
+        const TELEGRAM_CHAT_ID = '635452296';
+
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const time = new Date().toLocaleTimeString('ru-RU');
+            log.innerHTML += `<div class="${type}">[${time}] ${message}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function testTelegram() {
+            addLog('🚀 Отправка тестового сообщения...', 'info');
+            
+            const message = `🧪 <b>Тестовое уведомление</b>\n\n` +
+                          `✅ Telegram бот работает!\n` +
+                          `🕒 Время: ${new Date().toLocaleString('ru-RU')}\n` +
+                          `📱 Устройство: ${navigator.userAgent.includes('Mobile') ? 'Мобильное' : 'Десктоп'}\n` +
+                          `🖥️ Платформа: ${navigator.platform}`;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            try {
+                addLog('📡 Отправка запроса к Telegram API...', 'info');
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.ok) {
+                    addLog('✅ УСПЕХ! Сообщение отправлено в Telegram!', 'success');
+                    addLog(`📊 Детали: message_id = ${data.result.message_id}`, 'success');
+                    addLog('💡 Проверьте Telegram - должно прийти уведомление!', 'success');
+                } else {
+                    addLog('❌ ОШИБКА от Telegram API:', 'error');
+                    addLog(`Код ошибки: ${data.error_code}`, 'error');
+                    addLog(`Описание: ${data.description}`, 'error');
+                    
+                    if (data.error_code === 400) {
+                        addLog('💡 Возможно, вы не нажали /start у бота!', 'error');
+                    }
+                }
+                
+                addLog(`📋 Полный ответ: ${JSON.stringify(data, null, 2)}`, 'info');
+                
+            } catch (error) {
+                addLog('❌ ОШИБКА при отправке:', 'error');
+                addLog(`${error.message}`, 'error');
+                addLog('💡 Проверьте интернет-соединение', 'error');
+            }
+        }
+
+        // Автоматический тест при загрузке
+        window.addEventListener('load', () => {
+            addLog('📱 Страница загружена', 'info');
+            addLog('🤖 Bot Token: ' + TELEGRAM_BOT_TOKEN.substring(0, 20) + '...', 'info');
+            addLog('👤 Chat ID: ' + TELEGRAM_CHAT_ID, 'info');
+            addLog('', 'info');
+            addLog('👆 Нажмите кнопку выше для отправки тестового сообщения', 'info');
+        });
+    </script>
+</body>
+</html>
+
