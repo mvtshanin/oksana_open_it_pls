@@ -10,12 +10,9 @@
     <!-- Falling petals container -->
     <div id="petals-container"></div>
     
-    <!-- Background music - using royalty-free music from online source -->
-    <audio id="bgMusic" loop>
-        <!-- Option 1: Use local file if you have one -->
-        <source src="music.mp3" type="audio/mpeg">
-        <!-- Option 2: Or use this free romantic piano music -->
-        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a87c1ec36.mp3" type="audio/mpeg">
+    <!-- Background music -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="data/balkon_ozhidanijj_-_preparaty_79133347.mp3" type="audio/mpeg">
     </audio>
     
     <!-- Music control button -->
@@ -28,12 +25,72 @@
             <div class="text-line" id="line2">Я не идеален, но с тобой хочу быть лучше.</div>
             <div class="text-line" id="line3">Я люблю тебя и хочу все исправить ❤️</div>
             
-            <button class="accept-btn" id="acceptBtn">
-                Принять извинения 💞
-            </button>
+            <!-- Scroll hint -->
+            <div class="scroll-hint" id="scrollHint">
+                <div class="scroll-text">Листай вниз 💕</div>
+                <div class="scroll-arrow">↓</div>
+            </div>
+        </div>
 
-            <div class="thank-you" id="thankYou">
-                Спасибо. Ты только что сделала меня самым счастливым человеком. 💕
+        <!-- Memories section -->
+        <div class="memories-section" id="memoriesSection">
+            <div class="section-title">Помнишь?.. 💭</div>
+            
+            <!-- Video and photo pair -->
+            <div class="media-row">
+                <div class="media-item video-item">
+                    <div class="media-wrapper">
+                        <video controls>
+                            <source src="data/IMG_0302.MP4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="media-caption">Тогда в москве нам было так хорошо 🏙️</div>
+                </div>
+                
+                <div class="media-item">
+                    <div class="media-wrapper">
+                        <img src="data/photo_2025-08-30_16-40-30.jpg" alt="Наши воспоминания">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo with caption -->
+            <div class="media-row">
+                <div class="media-item">
+                    <div class="media-wrapper">
+                        <img src="data/photo_2025-08-30_16-40-31.jpg" alt="В бане">
+                    </div>
+                    <div class="media-caption">В бане у войтика) потом еще денис у забора спал 😴🧖</div>
+                </div>
+            </div>
+
+            <!-- Photo with caption -->
+            <div class="media-row">
+                <div class="media-item">
+                    <div class="media-wrapper">
+                        <img src="data/photo_2025-08-30_16-40-32.jpg" alt="Воспоминания">
+                    </div>
+                    <div class="media-caption">проиграл 20 куни.... 😅</div>
+                </div>
+            </div>
+
+            <!-- Final message and button -->
+            <div class="final-section">
+                <div class="final-text">
+                    Я не хочу забывать тебя...  Хочу быть с тобой всегда ❤️
+                </div>
+                
+                <div class="final-text-secondary">
+                    Не хочу больше делать тебе больно, хочу делать тебя счастливой, хочу смеяться с тобой, хочу обнимать тебя, любить тебя
+                </div>
+                
+                <button class="accept-btn" id="acceptBtn">
+                    Принять извинения 💞
+                </button>
+
+                <div class="thank-you" id="thankYou">
+                    Спасибо. Ты только что сделала меня самым счастливым человеком. 💕
+                </div>
             </div>
         </div>
     </div>

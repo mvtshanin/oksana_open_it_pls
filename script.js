@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isMusicPlaying = false;
     
     // Set initial volume
-    bgMusic.volume = 0.3;
+    bgMusic.volume = 0.4;
     
     // Attempt to play music
     const playMusic = () => {
@@ -38,9 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 isMusicPlaying = true;
                 musicToggle.textContent = '🔊';
                 musicToggle.classList.remove('muted');
+                console.log('✅ Музыка играет');
             })
             .catch(err => {
-                console.log('Music autoplay prevented by browser. Click the music button to play.');
+                console.log('⚠️ Автовоспроизведение заблокировано браузером. Кликните на кнопку музыки.');
                 isMusicPlaying = false;
                 musicToggle.textContent = '🔇';
                 musicToggle.classList.add('muted');
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isMusicPlaying = false;
         musicToggle.textContent = '🔇';
         musicToggle.classList.add('muted');
+        console.log('⏸️ Музыка на паузе');
     };
     
     // Toggle music on button click
@@ -65,15 +67,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Try to play immediately
+    // Try to play immediately and set up fallbacks
     playMusic();
     
-    // Also try to play on first user interaction
-    document.addEventListener('click', function() {
-        if (!isMusicPlaying) {
+    // If autoplay was successful, update state
+    bgMusic.addEventListener('play', function() {
+        isMusicPlaying = true;
+        musicToggle.textContent = '🔊';
+        musicToggle.classList.remove('muted');
+    });
+    
+    bgMusic.addEventListener('pause', function() {
+        isMusicPlaying = false;
+        musicToggle.textContent = '🔇';
+        musicToggle.classList.add('muted');
+    });
+    
+    // Fallback: try to play on first user interaction anywhere on page
+    const tryAutoplay = function() {
+        if (!isMusicPlaying && bgMusic.paused) {
             playMusic();
         }
-    }, { once: true });
+    };
+    
+    document.addEventListener('click', tryAutoplay, { once: true });
+    document.addEventListener('touchstart', tryAutoplay, { once: true });
+    document.addEventListener('keydown', tryAutoplay, { once: true });
     
     // Create falling petals
     createPetals();
