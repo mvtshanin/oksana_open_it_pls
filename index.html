@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя 💕</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Falling petals container -->
+    <div id="petals-container"></div>
+    
+    <!-- Background music - using royalty-free music from online source -->
+    <audio id="bgMusic" loop>
+        <!-- Option 1: Use local file if you have one -->
+        <source src="music.mp3" type="audio/mpeg">
+        <!-- Option 2: Or use this free romantic piano music -->
+        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a87c1ec36.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Music control button -->
+    <button id="musicToggle" class="music-toggle">🔊</button>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="content">
+            <div class="text-line" id="line1">Прости меня…</div>
+            <div class="text-line" id="line2">Я не идеален, но с тобой хочу быть лучше.</div>
+            <div class="text-line" id="line3">Я люблю тебя и хочу все исправить ❤️</div>
+            
+            <button class="accept-btn" id="acceptBtn">
+                Принять извинения 💞
+            </button>
+
+            <div class="thank-you" id="thankYou">
+                Спасибо. Ты только что сделала меня самым счастливым человеком. 💕
+            </div>
+        </div>
+    </div>
+
+    <!-- Hearts animation on accept -->
+    <div id="hearts-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
