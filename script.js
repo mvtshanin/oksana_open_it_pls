@@ -1,8 +1,22 @@
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
     
+    console.log('🎬 Страница загружена, начинаем инициализацию...');
+    
+    // Check if Logger is available
+    if (typeof Logger === 'undefined') {
+        console.error('❌ ОШИБКА: Logger не загружен! Проверьте, что logger.js подключен в HTML');
+        alert('Ошибка: Logger не загружен. Откройте консоль (F12) для деталей.');
+        return;
+    }
+    
+    console.log('✅ Logger найден, создаем экземпляр...');
+    
     // Initialize logger
     const logger = new Logger();
+    
+    console.log('✅ Logger инициализирован');
+    console.log('📊 Отправляем событие SITE_OPENED...');
     
     // Log site opened event
     logger.logEvent('SITE_OPENED', {
@@ -69,7 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const thankYou = document.getElementById('thankYou');
     
     acceptBtn.addEventListener('click', function() {
+        console.log('🎯 Кнопка нажата!');
+        
         // Log button click event
+        console.log('📊 Отправляем событие BUTTON_CLICKED...');
         logger.logEvent('BUTTON_CLICKED', {
             message: '💕 ОНА ПРИНЯЛА ИЗВИНЕНИЯ! 💕'
         });

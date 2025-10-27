@@ -49,11 +49,19 @@ class Logger {
     }
 
     async sendTelegramNotification(logData) {
+        console.log('🚀 Начинаем отправку в Telegram...');
+        console.log('📝 Данные для отправки:', logData);
+        
         const message = this.formatTelegramMessage(logData);
+        console.log('💬 Сформированное сообщение:', message);
+        
         const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        console.log('🌐 URL для отправки:', url.substring(0, 50) + '...');
 
         try {
-            await fetch(url, {
+            console.log('📡 Отправляем fetch запрос...');
+            
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,9 +72,25 @@ class Logger {
                     parse_mode: 'HTML'
                 })
             });
-            console.log('✅ Уведомление отправлено в Telegram');
+            
+            console.log('📥 Получен ответ от Telegram, статус:', response.status);
+            
+            const data = await response.json();
+            console.log('📊 Ответ от Telegram API:', data);
+            
+            if (data.ok) {
+                console.log('✅ УСПЕХ! Уведомление отправлено в Telegram');
+                console.log('📬 Message ID:', data.result.message_id);
+            } else {
+                console.error('❌ Telegram API вернул ошибку:', data);
+                console.error('Код ошибки:', data.error_code);
+                console.error('Описание:', data.description);
+            }
         } catch (error) {
-            console.error('❌ Ошибка отправки в Telegram:', error);
+            console.error('❌ Ошибка при отправке в Telegram:', error);
+            console.error('Тип ошибки:', error.name);
+            console.error('Сообщение:', error.message);
+            console.error('Стек:', error.stack);
         }
     }
 
