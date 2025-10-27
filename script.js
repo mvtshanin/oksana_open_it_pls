@@ -1,6 +1,14 @@
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Initialize logger
+    const logger = new Logger();
+    
+    // Log site opened event
+    logger.logEvent('SITE_OPENED', {
+        message: 'Оксана открыла сайт! 👀'
+    });
+    
     // Music control
     const bgMusic = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
@@ -61,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const thankYou = document.getElementById('thankYou');
     
     acceptBtn.addEventListener('click', function() {
+        // Log button click event
+        logger.logEvent('BUTTON_CLICKED', {
+            message: '💕 ОНА ПРИНЯЛА ИЗВИНЕНИЯ! 💕'
+        });
+        
         // Add clicked animation
         acceptBtn.classList.add('clicked');
         
